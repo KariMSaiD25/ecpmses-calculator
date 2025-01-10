@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import { purple , teal } from "@mui/material/colors";
 import { ChevronRight } from "@mui/icons-material";
 import { useState } from "react";
-
+import { useOutletContext } from "react-router-dom";
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
   backgroundColor: teal[500],
@@ -15,20 +15,24 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 function Create() {
+  const {  items, setItems } = useOutletContext();
 
   const [title, setTitle] =useState('')
   const [price ,setPrice] =useState('')
  function  handleSubmit(){
-  fetch('http://localhost:3100/mydata', {
-    method: "post",
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({price,title})}
-)
+//   fetch('http://localhost:3100/mydata', {
+//     method: "post",
+//     headers: {'Content-Type':'application/json'},
+//     body: JSON.stringify({price,title})}
+// )
+setItems((items) => [...items,{title,price}])
+console.log(items)
     setPrice('')
     setTitle('')
+    
   }
   return (
-    <Box sx={{ width: "390px" }} component={"form"}   >
+    <Box sx={{ width: "390px" }} component={"form"}    >
       <TextField
       autoComplete="off"
   

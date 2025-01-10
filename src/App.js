@@ -1,29 +1,55 @@
+// @ts-nocheck
 import Home from "./pages/home/Home";
 import Root from "./pages/Root";
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
+  BrowserRouter,
+  //createBrowserRouter,
+//  createRoutesFromElements,
   Route,
-  RouterProvider,
+  //RouterProvider,
+  Routes,
 } from "react-router-dom";
 import Create from "./pages/create/Create";
 
 
 import NotFound from "pages/NotFound";
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Root />}>
-      <Route index element={<Home />} />
-      <Route path="create" element={<Create />} />
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route path="/" element={<Root />}>
+//       <Route index element={<
+// // @ts-ignore
+//       Home />} />
+//       <Route path="create" element={<
+// // @ts-ignore
+//       Create />} />
+//       <Route path="*"  element={<NotFound/>}></Route>
+//     </Route>
+//   )
+// );
+
+//<RouterProvider router={router} /> 
+function App() {
+  return(
+  <> 
+  <BrowserRouter>
+<Routes>
+<Route path="/" element={<Root />}>
+      <Route index element={<
+// @ts-ignore
+      Home />} />
+      <Route path="create" element={<
+// @ts-ignore
+      Create />} />
       <Route path="*"  element={<NotFound/>}></Route>
     </Route>
-  )
-);
 
+</Routes>
 
-function App() {
-  return<RouterProvider router={router} /> 
-    
+ </BrowserRouter >
+    </> )
 }
 
 export default App;
+
+
+
