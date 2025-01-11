@@ -74,7 +74,7 @@ function Home() {
           }}
         >
           <Typography variant="h6" sx={{ ml: 3, fontSize: "1.3em" }}>
-            {" "}
+          
             {data.title}
           </Typography>
           <Typography

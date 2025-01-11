@@ -34,7 +34,7 @@ function Root() {
 
       
     <Box component={'aside'}>
-      < Drawr {...{ drawerWidth, setMode, open, setOpen, toggleDrawer }}>
+      < Drawr {...{ drawerWidth, setMode, open, setOpen, toggleDrawer , setToggleDrawer }}>
         
       </Drawr></Box>
 

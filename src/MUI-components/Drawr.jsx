@@ -20,18 +20,37 @@ import {
   Settings,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-
-function Drawr({ drawerWidth, setMode ,open , toggleDrawer  , setOpen}) {
+function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDrawer}) {
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(toggleDrawer)
+  
+  //const [bodyWidth, setBodyWidth] = useState(document.body.offsetWidth);
+
+//   useEffect(() => {
+//     // Function to update body width
+//     const updateBodyWidth = () => {
+//       setBodyWidth(document.body.offsetWidth);
+//     };
+
+//     // Attach the event listener
+//     window.addEventListener('resize', updateBodyWidth);
+
+//     // Cleanup the event listener on component unmount
+//     return () => {
+//       window.removeEventListener('resize', updateBodyWidth);
+//     };
+//   }, []);
+
+// bodyWidth >=900 ?setToggleDrawer('permanent'):setToggleDrawer('temporary')
+//   console.log(toggleDrawer , bodyWidth);
 
   return (
     <div>
       <Drawer
-        className="border-none"
+          
         sx={{
           display: { xs: open, md: "block" },
           width: drawerWidth,
@@ -39,13 +58,14 @@ function Drawr({ drawerWidth, setMode ,open , toggleDrawer  , setOpen}) {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            
           },
         }}
-        variant={toggleDrawer}
-        anchor="left" 
-        open={true}
-        onClose={() =>  setOpen('none')}
+        variant={ toggleDrawer }
+        anchor="left"
+        open={ true }
+        onClose={() => {
+          setToggleDrawer('permanent')
+          setOpen("none")}}
       >
         <List>
           <ListItem
