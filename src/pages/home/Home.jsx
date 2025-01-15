@@ -3,66 +3,78 @@ import "./home.css";
 import { Close } from "@mui/icons-material";
 //import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-function Home() {  
+import { useEffect, useState } from "react";
+function Home() {
   // @ts-ignore
   const { items, setItems } = useOutletContext();
-//  const [data, setData] = useState([]);
+   const [data, setData] = useState([]);
 
-  const total = items.reduce(
+  const total = data.reduce(
     (sum, item) => sum + parseFloat(item.price || 0),
     0
   );
-  // useEffect(() => {
-  //   async function fetchingData() {
-  //     try {
-  //       const res = await fetch("http://localhost:3100/mydata");
-  //       if (!res.ok) throw new Error("Something went wrong with fetching data");
-  //       setData(await res.json());
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  //   fetchingData();
-  // }, []);
-
-  
-  function handleDelete( title) {
-
-  //   fetch(url, {
-  //     method: "DELETE",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   },
-  
-
-  
+  useEffect(() => {
+    const controller = new AbortController();
     
-  // )
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error(
-  //           `Failed to delete: ${response.status} ${response.statusText}`
-  //         );
-  //       }
-  //       return response.json(); // Parse response if it includes JSON
-  //     })
-  //     .then((data) => {
-  //       console.log("Object deleted successfully:", data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
+  
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3100/mydata", {
+          signal: controller.signal,
+        });
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+  
+    fetchData();
+  
+    // Cleanup function
+    return () => {
+      controller.abort(); // Abort the fetch if the component unmounts
+    };
+  }, []);
 
-      setItems(data => data.filter(data1 => data1.title!==title)) 
+  
+
+  function handleDelete(url,/**title */) {
+      fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+
+    )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              `Failed to delete: ${response.status} ${response.statusText}`
+            );
+          }
+          return response.json(); // Parse response if it includes JSON
+        })
+        .then((data) => {
+          console.log("Object deleted successfully:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+  //  setItems((data) => data.filter((data1) => data1.title !== title));
   }
 
   return (
-    <Box>
-      {" "}
-      {items?.map((data) => (
+    <Box component="ul">
+      {data?.map((item = {}) => (
         <Paper
-          key={data.title}
+          component="li"
+          elevation={8}
+          key={item.title}
           sx={{
             position: "relative",
             width: "366px",
@@ -74,8 +86,7 @@ function Home() {
           }}
         >
           <Typography variant="h6" sx={{ ml: 3, fontSize: "1.3em" }}>
-          
-            {data.title}
+            {item.title}
           </Typography>
           <Typography
             variant="h6"
@@ -86,14 +97,15 @@ function Home() {
               mr: "35px",
             }}
           >
-            ${data.price}
+            ${item.price}
           </Typography>
           <IconButton
             sx={{ position: "absolute", top: "0", right: "0" }}
-            onClick={() => handleDelete(data.title)}> 
-    {/* `//localhost:3100/mydata/${data.id}`     */}
+            onClick={() => handleDelete(item.title)}
+          >
+            {/* `//localhost:3100/mydata/${data.id}`     */}
             <Close sx={{ fontSize: "20px" }} />
-          </IconButton>{" "}
+          </IconButton>
         </Paper>
       ))}
       <Typography
@@ -101,8 +113,7 @@ function Home() {
         variant="h5"
         color="inherit"
       >
-        {" "}
-        👉You spent <strong>${total}</strong>{" "}
+        👉You spent <strong>${total}</strong>
       </Typography>
     </Box>
   );

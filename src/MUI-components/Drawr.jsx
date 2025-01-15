@@ -20,18 +20,20 @@ import {
   Settings,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 
 function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDrawer}) {
+  //object
   const theme = useTheme();
+
   const navigate = useNavigate();
   const location = useLocation();
   
   //const [bodyWidth, setBodyWidth] = useState(document.body.offsetWidth);
 
-//   useEffect(() => {
+//// useEffect(() => {
 //     // Function to update body width
-//     const updateBodyWidth = () => {
+////  const updateBodyWidth = () => {
 //       setBodyWidth(document.body.offsetWidth);
 //     };
 
@@ -55,7 +57,7 @@ function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDr
           display: { xs: open, md: "block" },
           width: drawerWidth,
           flexShrink: 0,
-          "& .MuiDrawer-paper": {
+          '.MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: "border-box",
           },
@@ -67,7 +69,9 @@ function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDr
           setToggleDrawer('permanent')
           setOpen("none")}}
       >
+    
         <List>
+          
           <ListItem
             sx={{ display: "flex", justifyContent: "center", mb: "14px" }}
             disablePadding
@@ -78,7 +82,7 @@ function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDr
                   "currentMode",
                   theme.palette.mode === "light" ? "dark" : "light"
                 );
-                setMode(theme.palette.mode === "light" ? "dark" : "light");
+                setMode(localStorage.getItem('currentMode'));
               }}
               color="inherit"
             >
@@ -94,6 +98,7 @@ function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDr
           <Divider />
 
           <ListItem
+          divider
             disablePadding
             sx={{
               bgcolor:
@@ -113,6 +118,7 @@ function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDr
 
           <ListItem
             disablePadding
+            divider
             sx={{
               bgcolor:
                 location.pathname === "/create"
@@ -129,7 +135,15 @@ function Drawr({ drawerWidth, setMode, open, toggleDrawer, setOpen , setToggleDr
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding>
+          <ListItem divider disablePadding 
+            sx={{
+              bgcolor:
+                location.pathname === "/profile"
+                  ? // @ts-ignore
+                    theme.palette.favColor?.main
+                  : "",
+            }}>
+            
             <ListItemButton onClick={() => navigate("/profile")}>
               <ListItemIcon>
                 <Person2 />

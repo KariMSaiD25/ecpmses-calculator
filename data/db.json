@@ -9,6 +9,21 @@
       "id": "370d",
       "price": 5000,
       "title": "clothes"
+    },
+    {
+      "id": "4113",
+      "price": 10,
+      "title": "gym"
+    },
+    {
+      "id": "b2f2",
+      "price": 10,
+      "title": "food"
+    },
+    {
+      "id": "1627",
+      "price": 10,
+      "title": "water"
     }
   ]
 }
